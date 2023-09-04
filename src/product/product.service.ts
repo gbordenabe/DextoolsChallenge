@@ -6,11 +6,31 @@ import { Product } from './entities/product.entity';
 
 @Injectable()
 export class ProductService {
-  constructor(@InjectModel(PRODUCT.name) private userModel: Model<Product>) {}
+  constructor(@InjectModel(PRODUCT.name) private productModel: Model<Product>) {}
 
-  async findAll() {
+  async findProducts(filters: any) {
     try {
-      const products = await this.userModel.find();
+      let query = this.productModel.find();
+
+      // Aplica los filtros condicionales si se proporcionan.
+      if (filters.name) {
+        query = query.where('name').regex(new RegExp(filters.name, 'i'));
+      }
+
+      if (filters.category) {
+        query = query.where('category').regex(new RegExp(filters.category, 'i'));
+      }
+
+      if (!isNaN(filters.priceMin)) {
+        query = query.where('price').gte(filters.priceMin);
+      }
+
+      if (!isNaN(filters.priceMax)) {
+        query = query.where('price').lte(filters.priceMax);
+      }
+
+      // Ejecuta la consulta y devuelve los resultados.
+      const products = await query.exec();
       return products;
     } catch (error) {
       throw new HttpException(
@@ -18,9 +38,5 @@ export class ProductService {
         error.status ? error.status : HttpStatus.INTERNAL_SERVER_ERROR
       );
     }
-  }
-
-  findOne(filter: string) {
-    return `This action returns a #${filter} product`;
   }
 }

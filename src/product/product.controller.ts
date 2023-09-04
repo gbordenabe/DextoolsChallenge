@@ -1,4 +1,4 @@
-import { Controller, Get, Param, UseGuards } from '@nestjs/common';
+import { Controller, Get, Param, Query, UseGuards } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { ValidRoles } from 'src/auth/interfaces/valid-roles';
 import { Auth } from 'src/auth/decorators/auth.decorator';
@@ -9,13 +9,18 @@ export class ProductController {
 
   @Get()
   @Auth(ValidRoles.admin)
-  findAll() {
-    return this.productService.findAll();
-  }
-
-  @Get(':filter')
-  @Auth(ValidRoles.admin)
-  findOne(@Param('filter') filter: string) {
-    return this.productService.findOne(filter);
+  findAll(
+    @Query('name') name: string,
+    @Query('description') category: string,
+    @Query('priceMin') priceMin: string,
+    @Query('priceMax') priceMax: string
+  ) {
+    const filters = {
+      name,
+      category,
+      priceMin: parseFloat(priceMin),
+      priceMax: parseFloat(priceMax),
+    };
+    return this.productService.findProducts(filters);
   }
 }
