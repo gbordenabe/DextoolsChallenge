@@ -1,11 +1,4 @@
-import {
-  ArrayMinSize,
-  IsArray,
-  IsNumber,
-  IsOptional,
-  IsString,
-  ValidateNested,
-} from 'class-validator';
+import { ArrayMinSize, IsArray, IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class CreateProductDto {
   @IsString()
