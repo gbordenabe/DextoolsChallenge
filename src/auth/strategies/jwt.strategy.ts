@@ -15,7 +15,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  async validate(payload: JwtPayload): Promise<User> {
+  async validate(payload: JwtPayload): Promise<JwtPayload> {
     const { email } = payload;
 
     const user = await this.userService.findOneByUsernameOrEmail(email);
@@ -26,6 +26,11 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     if (user.active === false) {
       throw new UnauthorizedException('User inactive, talk with an admin');
     }
-    return user;
+
+    return {
+      username: user.username,
+      email: user.email,
+      role: user.role,
+    };
   }
 }

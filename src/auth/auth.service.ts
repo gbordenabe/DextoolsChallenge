@@ -4,7 +4,6 @@ import { UserService } from 'src/user/user.service';
 import { EncryptionService } from 'src/common/encryption.service';
 import { JwtService } from '@nestjs/jwt';
 import { JwtPayload } from './interfaces/jwt-payload.interface';
-import * as moment from 'moment';
 
 @Injectable()
 export class AuthService {
@@ -39,10 +38,6 @@ export class AuthService {
         username: user.username,
         email: user.email,
         role: user.role,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        createdAt: moment(user.createdAt).format('DD/MM/YYYY'),
-        dateOfBirth: moment(user.dateOfBirth).format('DD/MM/YYYY'),
       }),
     };
   }
