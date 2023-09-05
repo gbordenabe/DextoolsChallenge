@@ -4,7 +4,6 @@ import { ProductController } from './product.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { PRODUCT } from 'src/common/models';
 import { ProductSchema } from './entities/product.entity';
-import { PassportModule } from '@nestjs/passport';
 import { AuthModule } from 'src/auth/auth.module';
 
 @Module({

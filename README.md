@@ -1,73 +1,65 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# Instrucciones para levantar el proyecto
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Siga estos pasos para ejecutar el proyecto en su máquina local:
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+1. Ejecute el siguiente comando para instalar las dependencias:
 
-## Description
+   ```bash
+   npm install
+   ```
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+2. Haga una copia del archivo `.env.example` y renómbrelo a `.env`. Luego, complete el archivo `.env` con las credenciales de la base de datos.
 
-## Installation
+3. Para levantar el proyecto, ejecute el siguiente comando:
 
-```bash
-$ npm install
-```
+   ```bash
+   npm run start:dev
+   ```
 
-## Running the app
+Una vez que el proyecto esté en funcionamiento, estará disponible en el puerto 3000.
 
-```bash
-# development
-$ npm run start
+## Endpoints de Postman
 
-# watch mode
-$ npm run start:dev
+Puede utilizar los siguientes endpoints de Postman para interactuar con el proyecto:
 
-# production mode
-$ npm run start:prod
-```
+- **Login** (Puede utilizar el nombre de usuario o el correo electrónico):
 
-## Test
+  - Método: POST
+  - URL: `localhost:3000/auth/login`
+  - Cuerpo (Body):
 
-```bash
-# unit tests
-$ npm run test
+    ```json
+    {
+      "usernameOrEmail": "challenge",
+      "password": "ch411enge"
+    }
+    ```
 
-# e2e tests
-$ npm run test:e2e
+- **Buscar productos** (Puede agregar los parámetros "name, description, priceMin, PriceMax" para personalizar la búsqueda; si no se utiliza ninguno, buscará todos los productos):
 
-# test coverage
-$ npm run test:cov
-```
+  - Método: GET
+  - URL: `localhost:3000/product`
+  - Ejemplos:
 
-## Support
+    - `localhost:3000/product?name=mouse`
+    - `localhost:3000/product?descripcion=brown`
+    - `localhost:3000/product?priceMax=1000`
+    - Se pueden combinar los parámetros.
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+- **Crear Producto** (los campos en el ejemplo son obligatorios; "code" y "description" son opcionales):
 
-## Stay in touch
+  - Método: POST
+  - URL: `localhost:3000/product`
+  - Cuerpo (Body):
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+    ```json
+    {
+      "SKU": "skutest",
+      "name": "nametest",
+      "pictures": ["picturestest"],
+      "price": 123,
+      "currency": "CLP"
+    }
+    ```
 
-## License
-
-Nest is [MIT licensed](LICENSE).
+Asegúrese de incluir el token JWT que se obtiene al hacer login en el encabezado "Auth Bearer Token" para las rutas que requieran autenticación con el rol de administrador y estar activo.
