@@ -14,11 +14,14 @@ export class UserService {
 
   async findOneByUsernameOrEmail(usernameOrEmail: string) {
     try {
-      const user = await this.userModel.findOne(
-        this.isEmailService.isEmail(usernameOrEmail)
-          ? { email: usernameOrEmail }
-          : { username: usernameOrEmail }
-      );
+      const user = await this.userModel.findOne({
+        $and: [
+          this.isEmailService.isEmail(usernameOrEmail)
+            ? { email: usernameOrEmail }
+            : { username: usernameOrEmail },
+          { active: true },
+        ],
+      });
       return user;
     } catch (error) {
       throw new HttpException(
