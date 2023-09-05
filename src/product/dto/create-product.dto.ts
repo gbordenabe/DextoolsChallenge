@@ -1,4 +1,13 @@
-import { ArrayMinSize, IsArray, IsNumber, IsOptional, IsString } from 'class-validator';
+import {
+  ArrayMinSize,
+  IsArray,
+  IsNumber,
+  IsOptional,
+  IsString,
+  IsUrl,
+  Validate,
+} from 'class-validator';
+import { IsImageExtension } from '../validators/isImageExtension.validator';
 
 export class CreateProductDto {
   @IsString()
@@ -16,8 +25,11 @@ export class CreateProductDto {
   description: string;
 
   @IsArray()
-  @IsString({ each: true })
+  @IsUrl({}, { each: true, message: 'Each element must to be an URL' })
   @ArrayMinSize(1)
+  @Validate(IsImageExtension, {
+    message: 'Each element must be an image',
+  })
   pictures: string[];
 
   @IsNumber()
