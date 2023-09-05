@@ -46,7 +46,7 @@ Puede utilizar los siguientes endpoints de Postman para interactuar con el proye
     - `localhost:3000/product?priceMax=1000`
     - Se pueden combinar los parámetros.
 
-- **Crear Producto** (los campos en el ejemplo son obligatorios; "code" y "description" son opcionales):
+- **Crear Producto** (los campos en el ejemplo son obligatorios; "code" y "description" son opcionales, ademas de que las pictures deben ser urls y finalizar con extensiones de imagen):
 
   - Método: POST
   - URL: `localhost:3000/product`
@@ -56,7 +56,7 @@ Puede utilizar los siguientes endpoints de Postman para interactuar con el proye
     {
       "SKU": "skutest",
       "name": "nametest",
-      "pictures": ["picturestest"],
+      "pictures": ["https://picturestest.com/image.png"],
       "price": 123,
       "currency": "CLP"
     }
